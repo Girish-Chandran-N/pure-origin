@@ -4,7 +4,7 @@
    -------------------------------------------------------------------------- */
 
 // Configure separate Google Sheet Web App URLs for Buyers and Suppliers
-const BUYER_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwOdB1VVWTcGd3Gl6zLrkoLeLb52J-PkNYON8ZSOzWvkWZCuA3rJUpKj_6HSPOn7lJaCw/exec";
+const BUYER_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyfoOU-lJpD1oi5mi-wGgMPAEStTnVCus7PpQqtT95oAeX33pBHO0OVlbx4BwxSVzFN/exec";
 const SUPPLIER_SHEET_WEBHOOK_URL = "";  // Paste Supplier Google Sheet Web App URL here
 
 document.addEventListener('DOMContentLoaded', () => {
