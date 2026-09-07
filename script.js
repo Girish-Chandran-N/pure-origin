@@ -260,13 +260,13 @@ document.addEventListener('DOMContentLoaded', () => {
     privacy: {
       title: "Privacy & Data Protection Notice (UK GDPR)",
       content: `
-        <p><strong>Pure Origin Trading Ltd</strong> ("we", "us", or "our"), registered in England and Wales and operating from Eastbourne, East Sussex, UK, is committed to safeguarding your privacy under the UK Data Protection Act 2018 and the UK General Data Protection Regulation (UK GDPR).</p>
+        <p><strong>Pure Origin Trading Ltd</strong> ("we", "us", or "our"), registered in England and Wales and operating from Bournemouth, Dorset, UK, is committed to safeguarding your privacy under the UK Data Protection Act 2018 and the UK General Data Protection Regulation (UK GDPR).</p>
       `
     },
     terms: {
       title: "B2B Terms of Trade & Service",
       content: `
-        <p>These Terms of Trade govern all wholesale enquiries, sample approvals, and commercial import/export trade agreements conducted by <strong>Pure Origin Trading Ltd</strong> (Eastbourne, UK).</p>
+        <p>These Terms of Trade govern all wholesale enquiries, sample approvals, and commercial import/export trade agreements conducted by <strong>Pure Origin Trading Ltd</strong> (Bournemouth, Dorset, UK).</p>
       `
     },
     "supply-chain": {
@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (response.ok || response.status === 200 || response.status === 0) {
           statusEl.className = 'form-feedback success';
           statusEl.innerHTML = `
-            <strong>Enquiry Received.</strong> Thank you. Your message has landed directly with our UK trading team in Eastbourne. 
+            <strong>Enquiry Received.</strong> Thank you. Your message has landed directly with our UK trading team in Bournemouth. 
             We will review your enquiry and reply <strong>within 2 working days</strong>.
           `;
           form.reset();
