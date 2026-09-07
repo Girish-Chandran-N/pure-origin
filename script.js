@@ -1,17 +1,18 @@
 /* --------------------------------------------------------------------------
-   PURE ORIGIN TRADING LTD — JAVASCRIPT LOGIC
+   PURE ORIGIN TRADING LTD — ENHANCED JAVASCRIPT LOGIC
+   Full Scrollspy, Animations, Modal Management & Accessibility
    -------------------------------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Update Footer Year dynamically
+  // 1. Dynamic Footer Year
   const yearSpan = document.getElementById('yearSpan');
   if (yearSpan) {
     yearSpan.textContent = new Date().getFullYear();
   }
 
   /* --------------------------------------------------------------------------
-     1. Mobile Navigation Menu Toggle
+     2. Mobile Navigation Menu Toggle
      -------------------------------------------------------------------------- */
   const menuToggle = document.getElementById('menuToggle');
   const primaryNav = document.getElementById('primaryNav');
@@ -33,7 +34,76 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* --------------------------------------------------------------------------
-     2. Buyer vs Supplier Tab Switcher & URL Hash Deep-Linking
+     3. Active Navigation Scrollspy & Header Scroll Effect
+     -------------------------------------------------------------------------- */
+  const siteHeader = document.querySelector('.site-header');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section[id]');
+
+  function handleScroll() {
+    // Header shadow on scroll
+    if (siteHeader) {
+      if (window.scrollY > 20) {
+        siteHeader.classList.add('scrolled');
+      } else {
+        siteHeader.classList.remove('scrolled');
+      }
+    }
+
+    // Scrollspy active state
+    let currentSectionId = '';
+    const scrollPosition = window.scrollY + 120;
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+        currentSectionId = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      const sectionAttr = link.getAttribute('data-section');
+      if (sectionAttr === currentSectionId) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  /* --------------------------------------------------------------------------
+     4. Scroll-Triggered Reveal Animations (IntersectionObserver)
+     -------------------------------------------------------------------------- */
+  const revealElements = document.querySelectorAll('.reveal-on-scroll');
+
+  if ('IntersectionObserver' in window && revealElements.length > 0) {
+    const observerOptions = {
+      root: null,
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    };
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    revealElements.forEach(el => revealObserver.observe(el));
+  } else {
+    // Fallback if IntersectionObserver is not supported
+    revealElements.forEach(el => el.classList.add('visible'));
+  }
+
+  /* --------------------------------------------------------------------------
+     5. Buyer vs Supplier Tab Switcher & URL Hash Deep-Linking
      -------------------------------------------------------------------------- */
   const tabButtons = document.querySelectorAll('.tab-button');
   const formPanels = document.querySelectorAll('.form-panel');
@@ -81,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('hashchange', handleUrlHash);
 
   /* --------------------------------------------------------------------------
-     3. Product Category Details Modal
+     6. Product Category Details Modal
      -------------------------------------------------------------------------- */
   const categoryModal = document.getElementById('categoryModal');
   const modalTitle = document.getElementById('modalTitle');
@@ -165,14 +235,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  if (modalClose) {
+  if (modalClose && categoryModal) {
     modalClose.addEventListener('click', () => {
       categoryModal.classList.remove('open');
       categoryModal.setAttribute('aria-hidden', 'true');
     });
-  }
 
-  if (categoryModal) {
     categoryModal.addEventListener('click', (e) => {
       if (e.target === categoryModal) {
         categoryModal.classList.remove('open');
@@ -182,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* --------------------------------------------------------------------------
-     4. Legal Policies Modal System (Privacy, Terms, Supply Chain, Cookies)
+     7. Legal Policies Modal System (Privacy, Terms, Supply Chain, Cookies)
      -------------------------------------------------------------------------- */
   const legalModal = document.getElementById('legalModal');
   const legalTitle = document.getElementById('legalTitle');
@@ -261,14 +329,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  if (legalClose) {
+  if (legalClose && legalModal) {
     legalClose.addEventListener('click', () => {
       legalModal.classList.remove('open');
       legalModal.setAttribute('aria-hidden', 'true');
     });
-  }
 
-  if (legalModal) {
     legalModal.addEventListener('click', (e) => {
       if (e.target === legalModal) {
         legalModal.classList.remove('open');
@@ -277,8 +343,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Keyboard Accessibility: Escape key closes active modals
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (categoryModal && categoryModal.classList.contains('open')) {
+        categoryModal.classList.remove('open');
+        categoryModal.setAttribute('aria-hidden', 'true');
+      }
+      if (legalModal && legalModal.classList.contains('open')) {
+        legalModal.classList.remove('open');
+        legalModal.setAttribute('aria-hidden', 'true');
+      }
+    }
+  });
+
   /* --------------------------------------------------------------------------
-     5. Form Submission Handling with Feedback & SLA Guarantee
+     8. Form Validation & Submission Handling
      -------------------------------------------------------------------------- */
   function setupFormHandling(formId, statusId) {
     const form = document.getElementById(formId);
@@ -301,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `<span>Sending...</span>`;
+        submitBtn.innerHTML = `<span>Transmitting Enquiry...</span>`;
 
         const formData = new FormData(form);
 
