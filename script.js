@@ -363,9 +363,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const webhookUrl = targetSheetUrl || (formId === 'buyerForm' ? BUYER_SHEET_WEBHOOK_URL : SUPPLIER_SHEET_WEBHOOK_URL);
         if (webhookUrl && webhookUrl.startsWith('http')) {
           try {
+            const searchParams = new URLSearchParams(formData);
             fetch(webhookUrl, {
               method: 'POST',
-              body: formData,
+              body: searchParams,
               mode: 'no-cors'
             });
           } catch (sheetErr) {
