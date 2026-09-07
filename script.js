@@ -1,7 +1,10 @@
 /* --------------------------------------------------------------------------
    PURE ORIGIN TRADING LTD — ENHANCED JAVASCRIPT LOGIC
-   Full Scrollspy, Animations, Modal Management & Accessibility
+   Full Scrollspy, Animations, Modal Management & Sheets/Email Integration
    -------------------------------------------------------------------------- */
+
+// Optional: Set your Google Sheet Web App URL here to automatically stream form data to Google Sheets
+const GOOGLE_SHEET_WEBHOOK_URL = "";
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -41,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const sections = document.querySelectorAll('section[id]');
 
   function handleScroll() {
-    // Header shadow on scroll
     if (siteHeader) {
       if (window.scrollY > 20) {
         siteHeader.classList.add('scrolled');
@@ -50,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Scrollspy active state
     let currentSectionId = '';
     const scrollPosition = window.scrollY + 120;
 
@@ -98,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     revealElements.forEach(el => revealObserver.observe(el));
   } else {
-    // Fallback if IntersectionObserver is not supported
     revealElements.forEach(el => el.classList.add('visible'));
   }
 
@@ -130,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Global trigger for buttons that set active form tab
   document.querySelectorAll('[data-set-tab]').forEach(btn => {
     btn.addEventListener('click', () => {
       const tabTarget = btn.getAttribute('data-set-tab');
@@ -138,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // URL Hash listener for direct campaign / directory landing (#buyer or #supplier)
   function handleUrlHash() {
     const hash = window.location.hash.toLowerCase();
     if (hash === '#buyer' || hash === '#buyers') {
@@ -264,53 +262,28 @@ document.addEventListener('DOMContentLoaded', () => {
         <p><strong>Pure Origin Trading Ltd</strong> ("we", "us", or "our"), registered in England and Wales and operating from Eastbourne, East Sussex, UK, is committed to safeguarding your privacy under the UK Data Protection Act 2018 and the UK General Data Protection Regulation (UK GDPR).</p>
         
         <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">1. Information We Collect</h4>
-        <p>We collect business contact information submitted through our enquiry forms, including name, business email, company name, telephone number, product interest, and volume requirements. We do not collect sensitive personal data or store payment card details on this website.</p>
+        <p>We collect business contact information submitted through our enquiry forms, including name, business email, company name, telephone number, product interest, and volume requirements.</p>
 
         <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">2. How We Use Your Data</h4>
-        <p>Information provided is strictly used to process commercial trade enquiries, verify buyer/supplier eligibility, prepare wholesale quotes, and maintain trade communication. We do not sell or rent commercial contact details to third parties.</p>
-
-        <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">3. Data Security & Retention</h4>
-        <p>All form transmissions are processed securely. Commercial records are retained only as long as necessary to fulfill trade agreements and legal UK tax/accounting obligations.</p>
-
-        <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">4. Your Legal Rights</h4>
-        <p>You have the right to request access to, correction of, or deletion of your commercial data held by us. Contact our UK privacy officer at our Eastbourne office for any data inquiries.</p>
+        <p>Information provided is strictly used to process commercial trade enquiries, verify buyer/supplier eligibility, prepare wholesale quotes, and maintain trade communication.</p>
       `
     },
     terms: {
       title: "B2B Terms of Trade & Service",
       content: `
         <p>These Terms of Trade govern all wholesale enquiries, sample approvals, and commercial import/export trade agreements conducted by <strong>Pure Origin Trading Ltd</strong> (Eastbourne, UK).</p>
-
-        <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">1. Pre-Shipment Inspection & Sample Lock</h4>
-        <p>Every commercial order is manufactured and checked against an approved physical or technical sample. Pre-shipment batch inspection reports are verified before goods leave our overseas manufacturing partners.</p>
-
-        <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">2. Customs & Documentation Clearances</h4>
-        <p>Export documentation, certificates of origin, and UK customs commodity declarations are reviewed prior to shipment dispatch. Cost quotes provided in trade agreements are binding under specified logistics terms.</p>
-
-        <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">3. Limitation of Liability</h4>
-        <p>Pure Origin Trading Ltd is an accountable UK registered entity. All commercial agreements and liability standards are governed under the laws of England and Wales.</p>
       `
     },
     "supply-chain": {
       title: "Responsible Sourcing & Labor Code of Conduct",
       content: `
         <p>Pure Origin Trading Ltd enforces strict ethical standards across all overseas suppliers, workshops, and artisan partners, primarily in India and international manufacturing regions.</p>
-
-        <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">1. Fair Wages & Working Conditions</h4>
-        <p>We work exclusively with workshops and cooperatives that guarantee fair wages, safe physical working conditions, and reasonable working hours for all craftspeople and workers.</p>
-
-        <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">2. Prohibition of Forced & Child Labor</h4>
-        <p>Pure Origin Trading Ltd maintains a zero-tolerance policy regarding forced labor, human trafficking, or child labor. Regular on-site checks and partner audits are conducted.</p>
-
-        <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">3. Material Integrity</h4>
-        <p>Materials including organic textiles, eco-packaging kraft, and genuine/vegan leathers are verified for authentic material provenance and environmental responsibility.</p>
       `
     },
     cookies: {
       title: "Cookie & Essential Storage Policy",
       content: `
         <p>This website uses essential session functional cookies required for site navigation, form submission security, and tab switching functionality.</p>
-        <p>We do not use invasive third-party tracking cookies or sell visitor analytics. By using this website, you agree to essential technical cookies necessary for rendering site features.</p>
       `
     }
   };
@@ -343,7 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Keyboard Accessibility: Escape key closes active modals
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       if (categoryModal && categoryModal.classList.contains('open')) {
@@ -358,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* --------------------------------------------------------------------------
-     8. Form Validation & Submission Handling
+     8. Form Validation & Submission (Formspree Email + Optional Google Sheets)
      -------------------------------------------------------------------------- */
   function setupFormHandling(formId, statusId) {
     const form = document.getElementById(formId);
@@ -385,11 +357,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const formData = new FormData(form);
 
+        // 1. Submit to Formspree (Triggers instant email notification to user)
         const response = await fetch(form.action, {
           method: 'POST',
           body: formData,
           headers: { 'Accept': 'application/json' }
         });
+
+        // 2. Async post to Google Sheets Webhook if configured
+        if (GOOGLE_SHEET_WEBHOOK_URL && GOOGLE_SHEET_WEBHOOK_URL.startsWith('http')) {
+          try {
+            fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+              method: 'POST',
+              body: formData,
+              mode: 'no-cors'
+            });
+          } catch (sheetErr) {
+            console.log('Google Sheet webhook post:', sheetErr);
+          }
+        }
 
         if (response.ok || response.status === 200 || response.status === 0) {
           statusEl.className = 'form-feedback success';
