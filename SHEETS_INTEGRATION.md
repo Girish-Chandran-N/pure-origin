@@ -1,82 +1,85 @@
-# Google Sheets & Email Integration Guide — Pure Origin Trading Ltd
+# Separate Buyer & Supplier Google Sheets Setup — Pure Origin Trading Ltd
 
-This guide explains how to automatically receive form submissions from your website directly into a **Google Sheet / Excel** and your **Email Inbox**.
+You can automatically maintain **two separate Google Sheets**:
+1. **Buyers Sheet**: Receives all UK Buyer wholesale enquiries.
+2. **Suppliers Sheet**: Receives all Overseas Supplier introductions.
 
 ---
 
-## Method 1: Google Sheets Direct Integration (Recommended, 100% Free)
+## Step 1: Create Your Two Google Sheets
 
-You can connect your website forms directly to a Google Sheet using Google Apps Script in under 2 minutes:
+### Sheet 1: "Pure Origin — Buyer Enquiries"
+1. Create a Google Sheet named **"Pure Origin — Buyer Enquiries"**.
+2. Add these headers to Row 1:
+   `Timestamp` | `Name` | `Company` | `Email` | `Phone` | `Product Category` | `Estimated Volume` | `Timeline` | `Notes`
 
-### Step 1: Create Your Google Sheet
-1. Open [Google Sheets](https://sheets.google.com) and create a new blank spreadsheet named **"Pure Origin Website Enquiries"**.
-2. Add these headers to Row 1 of Sheet1:
-   - `Timestamp` | `Enquiry Type` | `Name` | `Company` | `Email` | `Phone / Location` | `Product Category` | `Volume / Certifications` | `Timeline` | `Notes`
+### Sheet 2: "Pure Origin — Supplier Introductions"
+1. Create a second Google Sheet named **"Pure Origin — Supplier Introductions"**.
+2. Add these headers to Row 1:
+   `Timestamp` | `Name` | `Workshop / Company` | `Email` | `Location` | `Production Category` | `Certifications` | `Workshop & Capacity Overview`
 
-### Step 2: Add Google Apps Script
-1. In your Google Sheet, click **Extensions** &rarr; **Apps Script**.
-2. Erase any code in the editor and paste the following script:
+---
 
+## Step 2: Add Apps Script to Each Sheet
+
+### For Buyer Sheet:
+1. In **Pure Origin — Buyer Enquiries**, click **Extensions** &rarr; **Apps Script**.
+2. Paste this code:
 ```javascript
 function doPost(e) {
-  try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var data = e.parameter;
-    
-    sheet.appendRow([
-      new Date(),
-      data.enquiry_type || data.form_type || 'General',
-      data.name || '',
-      data.company || '',
-      data.email || '',
-      data.phone || data.location || '',
-      data.product_category || data.production_category || '',
-      data.volume || data.certifications || '',
-      data.timeline || '',
-      data.notes || ''
-    ]);
-    
-    return ContentService
-      .createTextOutput(JSON.stringify({ 'result': 'success' }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ 'result': 'error', 'error': err }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = e.parameter;
+  sheet.appendRow([
+    new Date(),
+    data.name || '',
+    data.company || '',
+    data.email || '',
+    data.phone || '',
+    data.product_category || '',
+    data.volume || '',
+    data.timeline || '',
+    data.notes || ''
+  ]);
+  return ContentService.createTextOutput(JSON.stringify({ 'result': 'success' })).setMimeType(ContentService.MimeType.JSON);
 }
 ```
+3. Click **Deploy** &rarr; **New deployment** &rarr; Select type **Web app** &rarr; Set *Who has access* to **Anyone**.
+4. Copy the **Buyer Web App URL**.
 
-3. Click **Save** (disk icon).
-4. Click **Deploy** &rarr; **New deployment**.
-5. Select type: **Web app**.
-6. Set **Execute as**: *Me*.
-7. Set **Who has access**: *Anyone*.
-8. Click **Deploy**, authorize permissions, and copy your **Web App URL** (starts with `https://script.google.com/macros/s/...`).
+---
 
-### Step 3: Connect to Your Website (`script.js`)
-In `script.js`, replace `GOOGLE_SHEET_WEBHOOK_URL` with your copied Web App URL:
+### For Supplier Sheet:
+1. In **Pure Origin — Supplier Introductions**, click **Extensions** &rarr; **Apps Script**.
+2. Paste this code:
 ```javascript
-const GOOGLE_SHEET_WEBHOOK_URL = "YOUR_COPIED_WEB_APP_URL_HERE";
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = e.parameter;
+  sheet.appendRow([
+    new Date(),
+    data.name || '',
+    data.company || '',
+    data.email || '',
+    data.location || '',
+    data.production_category || '',
+    data.certifications || '',
+    data.notes || ''
+  ]);
+  return ContentService.createTextOutput(JSON.stringify({ 'result': 'success' })).setMimeType(ContentService.MimeType.JSON);
+}
+```
+3. Click **Deploy** &rarr; **New deployment** &rarr; Select type **Web app** &rarr; Set *Who has access* to **Anyone**.
+4. Copy the **Supplier Web App URL**.
+
+---
+
+## Step 3: Paste URLs into `script.js`
+
+In `script.js`, paste your two URLs at the top of the file:
+
+```javascript
+const BUYER_SHEET_WEBHOOK_URL = "YOUR_BUYER_WEB_APP_URL_HERE";
+const SUPPLIER_SHEET_WEBHOOK_URL = "YOUR_SUPPLIER_WEB_APP_URL_HERE";
 ```
 
----
-
-## Method 2: Formspree (Built-in Email & Excel Export)
-
-Since the website forms use Formspree, you already have built-in Email & Excel capabilities:
-
-1. **Email Notifications**: Formspree sends every submission directly to your email inbox immediately.
-2. **Export to Excel / CSV**: Log in to your [Formspree Dashboard](https://formspree.io), select your form, and click **Export CSV** to download an Excel-compatible file anytime.
-3. **Formspree 1-Click Google Sheets Integration**:
-   - In your Formspree Dashboard, go to **Plugins / Integrations** &rarr; **Google Sheets**.
-   - Click **Connect Google Sheets** and select your sheet. All submissions will automatically flow into that sheet!
-
----
-
-## Method 3: Zapier / Make.com Webhook
-
-If you use Microsoft Excel Online, Notion, or HubSpot:
-1. Create a free account on [Make.com](https://make.com) or [Zapier](https://zapier.com).
-2. Create a Webhook trigger and select action **Google Sheets / Excel - Add Row**.
-3. Paste the Webhook URL into Formspree or `script.js`.
+Now all **Buyer enquiries** go directly into your Buyer Sheet, and all **Supplier introductions** go directly into your Supplier Sheet!

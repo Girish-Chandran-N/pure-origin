@@ -1,10 +1,11 @@
 /* --------------------------------------------------------------------------
-   PURE ORIGIN TRADING LTD — ENHANCED JAVASCRIPT LOGIC
-   Full Scrollspy, Animations, Modal Management & Sheets/Email Integration
+   PURE ORIGIN TRADING LTD — JAVASCRIPT LOGIC
+   Dual Buyer & Supplier Google Sheets Webhooks Integration
    -------------------------------------------------------------------------- */
 
-// Optional: Set your Google Sheet Web App URL here to automatically stream form data to Google Sheets
-const GOOGLE_SHEET_WEBHOOK_URL = "";
+// Configure separate Google Sheet Web App URLs for Buyers and Suppliers
+const BUYER_SHEET_WEBHOOK_URL = "";     // Paste Buyer Google Sheet Web App URL here
+const SUPPLIER_SHEET_WEBHOOK_URL = "";  // Paste Supplier Google Sheet Web App URL here
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -248,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* --------------------------------------------------------------------------
-     7. Legal Policies Modal System (Privacy, Terms, Supply Chain, Cookies)
+     7. Legal Policies Modal System
      -------------------------------------------------------------------------- */
   const legalModal = document.getElementById('legalModal');
   const legalTitle = document.getElementById('legalTitle');
@@ -260,12 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Privacy & Data Protection Notice (UK GDPR)",
       content: `
         <p><strong>Pure Origin Trading Ltd</strong> ("we", "us", or "our"), registered in England and Wales and operating from Eastbourne, East Sussex, UK, is committed to safeguarding your privacy under the UK Data Protection Act 2018 and the UK General Data Protection Regulation (UK GDPR).</p>
-        
-        <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">1. Information We Collect</h4>
-        <p>We collect business contact information submitted through our enquiry forms, including name, business email, company name, telephone number, product interest, and volume requirements.</p>
-
-        <h4 style="margin-top:16px; margin-bottom:8px; font-weight:700;">2. How We Use Your Data</h4>
-        <p>Information provided is strictly used to process commercial trade enquiries, verify buyer/supplier eligibility, prepare wholesale quotes, and maintain trade communication.</p>
       `
     },
     terms: {
@@ -277,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "supply-chain": {
       title: "Responsible Sourcing & Labor Code of Conduct",
       content: `
-        <p>Pure Origin Trading Ltd enforces strict ethical standards across all overseas suppliers, workshops, and artisan partners, primarily in India and international manufacturing regions.</p>
+        <p>Pure Origin Trading Ltd enforces strict ethical standards across all overseas suppliers, workshops, and artisan partners.</p>
       `
     },
     cookies: {
@@ -330,9 +325,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* --------------------------------------------------------------------------
-     8. Form Validation & Submission (Formspree Email + Optional Google Sheets)
+     8. Separate Form Handlers for Buyer Sheet vs Supplier Sheet
      -------------------------------------------------------------------------- */
-  function setupFormHandling(formId, statusId) {
+  function setupFormHandling(formId, statusId, targetSheetUrl) {
     const form = document.getElementById(formId);
     const statusEl = document.getElementById(statusId);
     if (!form || !statusEl) return;
@@ -357,23 +352,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const formData = new FormData(form);
 
-        // 1. Submit to Formspree (Triggers instant email notification to user)
+        // 1. Primary Formspree Submission (Email notifications & CSV export)
         const response = await fetch(form.action, {
           method: 'POST',
           body: formData,
           headers: { 'Accept': 'application/json' }
         });
 
-        // 2. Async post to Google Sheets Webhook if configured
-        if (GOOGLE_SHEET_WEBHOOK_URL && GOOGLE_SHEET_WEBHOOK_URL.startsWith('http')) {
+        // 2. Dedicated Google Sheet Async Stream (Buyer Sheet vs Supplier Sheet)
+        const webhookUrl = targetSheetUrl || (formId === 'buyerForm' ? BUYER_SHEET_WEBHOOK_URL : SUPPLIER_SHEET_WEBHOOK_URL);
+        if (webhookUrl && webhookUrl.startsWith('http')) {
           try {
-            fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+            fetch(webhookUrl, {
               method: 'POST',
               body: formData,
               mode: 'no-cors'
             });
           } catch (sheetErr) {
-            console.log('Google Sheet webhook post:', sheetErr);
+            console.log('Google Sheet post:', sheetErr);
           }
         }
 
@@ -406,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  setupFormHandling('buyerForm', 'buyerStatus');
-  setupFormHandling('supplierForm', 'supplierStatus');
+  setupFormHandling('buyerForm', 'buyerStatus', BUYER_SHEET_WEBHOOK_URL);
+  setupFormHandling('supplierForm', 'supplierStatus', SUPPLIER_SHEET_WEBHOOK_URL);
 
 });
