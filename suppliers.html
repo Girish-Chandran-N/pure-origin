@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Suppliers — Pure Origin Trading Ltd</title>
+  <meta name="description" content="Dedicated Supplier Introduction page for overseas manufacturers and artisan workshops seeking trade sourcing partnerships with Pure Origin Trading Ltd in the UK.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header" id="top">
+    <div class="wrap nav-row">
+      <a href="index.html" class="wordmark" aria-label="Pure Origin Trading Ltd Home">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="brand-name">Pure Origin</span>
+      </a>
+
+      <nav class="links" id="primaryNav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="why-us.html" class="nav-link">Why Us</a>
+        <a href="trade.html" class="nav-link">What We Trade</a>
+        <a href="sustainability.html" class="nav-link">Sustainability</a>
+        <a href="buyers.html" class="nav-link">For Buyers</a>
+        <a href="suppliers.html" class="nav-link active">For Suppliers</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="contact.html" class="nav-cta-btn">Contact Us</a>
+      </div>
+
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="primaryNav">
+        <span class="menu-label">Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero-section">
+      <div class="wrap">
+        <span class="location-badge">For Overseas Manufacturers, Workshops &amp; Artisans</span>
+        <h1 class="page-title">Introduce Your Workshop &amp; Craftsmanship</h1>
+        <p class="page-intro">
+          We source high quality, sustainable products from overseas manufacturers and workshops — with a primary focus on India — for UK trade channels. Introduce your production capacity to Pure Origin.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-space">
+      <div class="wrap contact-layout">
+        <div class="contact-info-panel">
+          <div class="section-header align-left">
+            <span class="section-label">Supplier Partnership</span>
+            <h2>What We Look For In Suppliers</h2>
+          </div>
+          
+          <ul class="sustain-list" style="margin-top:20px; margin-bottom:32px;">
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--oxide)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span><strong>Quality Consistency:</strong> Pride in materials, handcraft, and adherence to approved pre-production samples.</span>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--oxide)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span><strong>Ethical Working Standards:</strong> Fair wages, safe workplace conditions, and zero forced labor.</span>
+            </li>
+            <li>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--oxide)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span><strong>Clear Communication:</strong> Openness on production lead times, capacity, and early flagging of issues.</span>
+            </li>
+          </ul>
+
+          <div class="info-list">
+            <div class="info-item">
+              <span class="info-label">Primary Route</span>
+              <span class="info-value">India to UK Wholesale</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Response Time SLA</span>
+              <span class="info-value highlight">Written response within 2 working days</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-container">
+          <div class="form-header-title">
+            <h3>Supplier Introduction Form</h3>
+            <p>Tell us about your workshop, products, and manufacturing capacity.</p>
+          </div>
+
+          <form id="supplierForm" class="contact-form" action="https://formspree.io/f/xbjnqpkz" method="POST" novalidate style="margin-top:20px;">
+            <input type="hidden" name="_subject" value="New Supplier Introduction — Pure Origin Trading Ltd">
+            <input type="hidden" name="enquiry_type" value="Supplier Introduction Page">
+
+            <div class="form-row">
+              <div class="field-group">
+                <label for="s-name">Name <span class="req">*</span></label>
+                <input type="text" id="s-name" name="name" required placeholder="Your name">
+              </div>
+              <div class="field-group">
+                <label for="s-company">Company or Workshop <span class="req">*</span></label>
+                <input type="text" id="s-company" name="company" required placeholder="Name of workshop or business">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field-group">
+                <label for="s-email">Email <span class="req">*</span></label>
+                <input type="email" id="s-email" name="email" required placeholder="email@workshop.com">
+              </div>
+              <div class="field-group">
+                <label for="s-location">Location <span class="req">*</span></label>
+                <input type="text" id="s-location" name="location" required placeholder="City, state, country">
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="s-category">What do you produce? <span class="req">*</span></label>
+              <select id="s-category" name="production_category" required>
+                <option value="" disabled selected>Select category...</option>
+                <option value="Sustainable & Eco-Friendly Packaging">Sustainable &amp; Eco-Friendly Packaging</option>
+                <option value="Surgical & Medical Supplies">Surgical &amp; Medical Supplies</option>
+                <option value="Textiles & Home Textiles">Textiles &amp; Home Textiles</option>
+                <option value="Leather Goods">Leather Goods (Genuine &amp; Vegan)</option>
+                <option value="Home Décor & Artisan Goods">Home Décor &amp; Artisan Goods</option>
+                <option value="Other Workshop Goods">Other Workshop &amp; Artisan Goods</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="s-cert">Certifications Held (if any)</label>
+              <input type="text" id="s-cert" name="certifications" placeholder="e.g. GOTS, OEKO-TEX, ISO 9001">
+            </div>
+
+            <div class="field-group">
+              <label for="s-notes">Workshop &amp; Capacity Overview <span class="req">*</span></label>
+              <textarea id="s-notes" name="notes" rows="4" required placeholder="Tell us about your workshop, materials, monthly production capacity, and experience..."></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary submit-btn">
+                <span>Send Supplier Introduction</span>
+              </button>
+              <span class="sla-text">We respond within 2 working days.</span>
+            </div>
+
+            <div class="form-feedback" id="supplierStatus" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-main-grid">
+      <div class="footer-col brand-col">
+        <span class="wordmark-sm"><span class="dot"></span> Pure Origin Trading Ltd</span>
+        <p class="footer-tagline">"Sustainable. Pure. High Quality."</p>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Navigation</span>
+        <ul class="footer-links-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="why-us.html">Why Choose Us</a></li>
+          <li><a href="trade.html">What We Trade</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Direct Pages</span>
+        <ul class="footer-links-list">
+          <li><a href="buyers.html">For UK Buyers</a></li>
+          <li><a href="suppliers.html">For Overseas Suppliers</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Location</span>
+        <p>Eastbourne, East Sussex, UK</p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom-bar">
+      <span>&copy; 2026 Pure Origin Trading Ltd</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

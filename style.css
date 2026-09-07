@@ -95,7 +95,7 @@ img {
 }
 
 .section-space {
-  padding: 92px 0;
+  padding: 88px 0;
 }
 
 .soft-bg {
@@ -135,6 +135,120 @@ img {
   color: var(--color-ink-soft);
   margin-top: 14px;
   line-height: 1.6;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.center-buttons {
+  justify-content: center;
+}
+
+.view-all-bar {
+  margin-top: 40px;
+  text-align: center;
+}
+
+/* Page Hero Headers for Multi-Page Inner Views */
+.page-hero-section {
+  padding: 64px 0 48px;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.page-title {
+  font-size: clamp(2.4rem, 4vw, 3.5rem);
+  margin-top: 12px;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.page-intro {
+  font-size: 1.18rem;
+  color: var(--color-ink-soft);
+  max-width: 42rem;
+  line-height: 1.6;
+}
+
+.about-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+}
+
+.detail-block h2 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  margin-bottom: 18px;
+}
+
+.detail-block p {
+  color: var(--color-ink-soft);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+.provenance-list {
+  margin: 20px 0;
+  padding-left: 20px;
+  color: var(--color-ink-soft);
+}
+
+.provenance-list li {
+  margin-bottom: 10px;
+  font-size: 1.02rem;
+}
+
+.inline-page-link {
+  font-weight: 700;
+  color: var(--oxide);
+  font-size: 0.95rem;
+}
+
+.inline-page-link:hover {
+  text-decoration: underline;
+}
+
+.card-link-wrapper {
+  margin-top: 16px;
+}
+
+/* Audience Split Grid Callouts */
+.audience-split-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.audience-banner-card {
+  background: var(--bg-card);
+  padding: 40px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.banner-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--oxide);
+  letter-spacing: 0.08em;
+}
+
+.audience-banner-card h3 {
+  font-size: 1.4rem;
+}
+
+.audience-banner-card p {
+  color: var(--color-ink-soft);
+  font-size: 0.98rem;
+  margin-bottom: 8px;
 }
 
 /* Scroll-Triggered Reveal Animations */
@@ -209,8 +323,8 @@ img {
 nav.links {
   display: flex;
   align-items: center;
-  gap: 36px;
-  font-size: 0.95rem;
+  gap: 32px;
+  font-size: 0.94rem;
   font-weight: 600;
 }
 
@@ -257,7 +371,7 @@ nav.links a:hover::after, nav.links a.active::after {
   border: 1px solid var(--color-ink);
 }
 
-.nav-cta-btn:hover {
+.nav-cta-btn:hover, .nav-cta-btn.active-btn {
   background: var(--oxide);
   border-color: var(--oxide);
   transform: translateY(-1px);
@@ -276,7 +390,7 @@ nav.links a:hover::after, nav.links a.active::after {
   color: var(--color-ink);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .header-actions { display: none; }
   .menu-toggle { display: block; }
   nav.links {
@@ -474,6 +588,10 @@ nav.links a:hover::after, nav.links a.active::after {
   }
   .hero-img {
     height: 340px;
+  }
+  .about-detail-grid, .audience-split-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 }
 

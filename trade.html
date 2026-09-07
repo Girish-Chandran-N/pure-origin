@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What We Trade — Product Categories | Pure Origin Trading Ltd</title>
+  <meta name="description" content="Explore product sourcing categories offered by Pure Origin Trading Ltd: Sustainable Packaging, Surgical Supplies, Textiles, Leather Goods, and Artisan Décor.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header" id="top">
+    <div class="wrap nav-row">
+      <a href="index.html" class="wordmark" aria-label="Pure Origin Trading Ltd Home">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="brand-name">Pure Origin</span>
+      </a>
+
+      <nav class="links" id="primaryNav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="why-us.html" class="nav-link">Why Us</a>
+        <a href="trade.html" class="nav-link active">What We Trade</a>
+        <a href="sustainability.html" class="nav-link">Sustainability</a>
+        <a href="buyers.html" class="nav-link">For Buyers</a>
+        <a href="suppliers.html" class="nav-link">For Suppliers</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="contact.html" class="nav-cta-btn">Contact Us</a>
+      </div>
+
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="primaryNav">
+        <span class="menu-label">Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero-section">
+      <div class="wrap">
+        <span class="location-badge">Product Catalog &amp; Categories</span>
+        <h1 class="page-title">Sourced With Integrity &amp; Provenance</h1>
+        <p class="page-intro">
+          We focus on supplying what businesses genuinely need, done properly. Our expertise currently centres on five core categories sourced primarily from India, with custom sourcing available upon request.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-space">
+      <div class="wrap">
+        <div class="products-grid">
+          
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <img src="assets/packaging.jpg" alt="Sustainable Kraft packaging and eco mailers" loading="lazy">
+            </div>
+            <div class="product-body">
+              <h3>Sustainable &amp; Eco-Friendly Packaging</h3>
+              <p>Biodegradable, recycled and compostable packaging that helps businesses meet what their customers — and the planet — increasingly expect as standard.</p>
+              <button class="product-modal-btn" data-open-modal="packaging">View Material Specifications &rarr;</button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <img src="assets/medical.jpg" alt="Surgical and medical supplies" loading="lazy">
+            </div>
+            <div class="product-body">
+              <h3>Surgical &amp; Medical Supplies</h3>
+              <p>Quality-assured instruments and consumables, sourced and documented to the precise standards the people relying on them deserve.</p>
+              <button class="product-modal-btn" data-open-modal="medical">View Material Specifications &rarr;</button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <img src="assets/textiles.jpg" alt="Natural woven textiles and linen" loading="lazy">
+            </div>
+            <div class="product-body">
+              <h3>Textiles &amp; Home Textiles</h3>
+              <p>Fabric and furnishings made with the kind of care that is hard to rush — quality you can feel, at a price that makes sense.</p>
+              <button class="product-modal-btn" data-open-modal="textiles">View Material Specifications &rarr;</button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <img src="assets/leather.jpg" alt="Genuine and vegan leather goods" loading="lazy">
+            </div>
+            <div class="product-body">
+              <h3>Leather Goods (Genuine &amp; Vegan)</h3>
+              <p>Genuine and vegan leather, worked by hands and workshops that take the time to do it properly.</p>
+              <button class="product-modal-btn" data-open-modal="leather">View Material Specifications &rarr;</button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img-wrap">
+              <img src="assets/artisan.jpg" alt="Home decor and handcrafted artisan ceramics" loading="lazy">
+            </div>
+            <div class="product-body">
+              <h3>Home Décor &amp; Artisan Goods</h3>
+              <p>Pieces made with real attention to detail, brought to UK shelves without losing what made them worth making in the first place.</p>
+              <button class="product-modal-btn" data-open-modal="artisan">View Material Specifications &rarr;</button>
+            </div>
+          </div>
+
+          <div class="product-card custom-enquiry-card">
+            <div class="custom-card-body">
+              <h3>Don't see what you need?</h3>
+              <p>"If what you need isn't listed here, ask us anyway — we'll always give you a straight answer on whether we're the right fit."</p>
+              <a href="buyers.html" class="btn btn-primary">Submit Custom Product Request &rarr;</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal for Product Category Details -->
+  <div class="modal-backdrop" id="categoryModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" id="modalClose" aria-label="Close modal">&times;</button>
+      <div class="modal-header">
+        <h3 id="modalTitle">Category Sourcing Standards</h3>
+      </div>
+      <div class="modal-body" id="modalContent">
+        <!-- Content injected dynamically -->
+      </div>
+      <div class="modal-footer">
+        <a href="buyers.html" class="btn btn-primary modal-cta-btn">Make a Product Enquiry &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap footer-main-grid">
+      <div class="footer-col brand-col">
+        <span class="wordmark-sm"><span class="dot"></span> Pure Origin Trading Ltd</span>
+        <p class="footer-tagline">"Sustainable. Pure. High Quality."</p>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Product Catalog</span>
+        <ul class="footer-links-list">
+          <li><a href="trade.html">Eco Packaging</a></li>
+          <li><a href="trade.html">Surgical &amp; Medical</a></li>
+          <li><a href="trade.html">Textiles &amp; Linen</a></li>
+          <li><a href="trade.html">Leather Goods</a></li>
+          <li><a href="trade.html">Artisan Home Décor</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Actions</span>
+        <ul class="footer-links-list">
+          <li><a href="buyers.html">For UK Buyers</a></li>
+          <li><a href="suppliers.html">For Suppliers</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Location</span>
+        <p>Eastbourne, East Sussex, UK</p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom-bar">
+      <span>&copy; 2026 Pure Origin Trading Ltd</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
