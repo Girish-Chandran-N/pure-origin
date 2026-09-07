@@ -6,6 +6,28 @@ You can automatically maintain **two separate Google Sheets**:
 
 ---
 
+## ⚠️ Troubleshooting Google Apps Script "Unable to open file" Error
+If Google displays *"Sorry, unable to open the file at present"* when clicking Extensions &rarr; Apps Script, this is a known Google bug caused by logged-in multi-account switching in your browser.
+
+### Quick Fix (3 Easy Options):
+
+#### Option 1: Create script directly at script.google.com (Recommended)
+1. Go directly to **[https://script.google.com](https://script.google.com)** in a new tab.
+2. Click **+ New project** in the top left.
+3. Paste the code below and click **Deploy** &rarr; **New deployment**.
+
+#### Option 2: Open Sheets in Incognito / Private Window
+1. Open an Incognito Window (`Cmd + Shift + N` on Mac).
+2. Log into your Google Account.
+3. Open your Google Sheet &rarr; click **Extensions** &rarr; **Apps Script**.
+
+#### Option 3: Formspree 1-Click Sync (No Code Required)
+1. Log in to [Formspree Dashboard](https://formspree.io).
+2. Go to **Settings / Integrations** &rarr; click **Google Sheets**.
+3. Formspree will automatically create and populate your Google Sheet without needing Apps Script!
+
+---
+
 ## Step 1: Create Your Two Google Sheets
 
 ### Sheet 1: "Pure Origin — Buyer Enquiries"
@@ -20,11 +42,7 @@ You can automatically maintain **two separate Google Sheets**:
 
 ---
 
-## Step 2: Add Apps Script to Each Sheet
-
-### For Buyer Sheet:
-1. In **Pure Origin — Buyer Enquiries**, click **Extensions** &rarr; **Apps Script**.
-2. Paste this code:
+## Step 2: Code for Buyer Sheet Web App
 ```javascript
 function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
@@ -43,14 +61,10 @@ function doPost(e) {
   return ContentService.createTextOutput(JSON.stringify({ 'result': 'success' })).setMimeType(ContentService.MimeType.JSON);
 }
 ```
-3. Click **Deploy** &rarr; **New deployment** &rarr; Select type **Web app** &rarr; Set *Who has access* to **Anyone**.
-4. Copy the **Buyer Web App URL**.
 
 ---
 
-### For Supplier Sheet:
-1. In **Pure Origin — Supplier Introductions**, click **Extensions** &rarr; **Apps Script**.
-2. Paste this code:
+## Step 3: Code for Supplier Sheet Web App
 ```javascript
 function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
@@ -68,12 +82,10 @@ function doPost(e) {
   return ContentService.createTextOutput(JSON.stringify({ 'result': 'success' })).setMimeType(ContentService.MimeType.JSON);
 }
 ```
-3. Click **Deploy** &rarr; **New deployment** &rarr; Select type **Web app** &rarr; Set *Who has access* to **Anyone**.
-4. Copy the **Supplier Web App URL**.
 
 ---
 
-## Step 3: Paste URLs into `script.js`
+## Step 4: Paste URLs into `script.js`
 
 In `script.js`, paste your two URLs at the top of the file:
 
@@ -81,5 +93,3 @@ In `script.js`, paste your two URLs at the top of the file:
 const BUYER_SHEET_WEBHOOK_URL = "YOUR_BUYER_WEB_APP_URL_HERE";
 const SUPPLIER_SHEET_WEBHOOK_URL = "YOUR_SUPPLIER_WEB_APP_URL_HERE";
 ```
-
-Now all **Buyer enquiries** go directly into your Buyer Sheet, and all **Supplier introductions** go directly into your Supplier Sheet!
