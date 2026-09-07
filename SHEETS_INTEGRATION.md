@@ -43,22 +43,35 @@ If Google displays *"Sorry, unable to open the file at present"* when clicking E
 ---
 
 ## Step 2: Code for Buyer Sheet Web App
+In your Google Sheet, click **Extensions** &rarr; **Apps Script** (or create a script at **script.google.com**), paste this code:
+
 ```javascript
 function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = e.parameter;
-  sheet.appendRow([
-    new Date(),
-    data.name || '',
-    data.company || '',
-    data.email || '',
-    data.phone || '',
-    data.product_category || '',
-    data.volume || '',
-    data.timeline || '',
-    data.notes || ''
-  ]);
-  return ContentService.createTextOutput(JSON.stringify({ 'result': 'success' })).setMimeType(ContentService.MimeType.JSON);
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = (e && e.parameter) ? e.parameter : {};
+    
+    // Fallback if post body was sent as raw JSON
+    if (Object.keys(data).length === 0 && e && e.postData && e.postData.contents) {
+      try { data = JSON.parse(e.postData.contents); } catch(err) {}
+    }
+    
+    sheet.appendRow([
+      new Date(),
+      data.name || '',
+      data.company || '',
+      data.email || '',
+      data.phone || '',
+      data.product_category || '',
+      data.volume || '',
+      data.timeline || '',
+      data.notes || ''
+    ]);
+    
+    return ContentService.createTextOutput(JSON.stringify({ 'result': 'success' })).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ 'result': 'error', 'error': err.toString() })).setMimeType(ContentService.MimeType.JSON);
+  }
 }
 ```
 
@@ -67,27 +80,48 @@ function doPost(e) {
 ## Step 3: Code for Supplier Sheet Web App
 ```javascript
 function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = e.parameter;
-  sheet.appendRow([
-    new Date(),
-    data.name || '',
-    data.company || '',
-    data.email || '',
-    data.location || '',
-    data.production_category || '',
-    data.certifications || '',
-    data.notes || ''
-  ]);
-  return ContentService.createTextOutput(JSON.stringify({ 'result': 'success' })).setMimeType(ContentService.MimeType.JSON);
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = (e && e.parameter) ? e.parameter : {};
+    
+    if (Object.keys(data).length === 0 && e && e.postData && e.postData.contents) {
+      try { data = JSON.parse(e.postData.contents); } catch(err) {}
+    }
+    
+    sheet.appendRow([
+      new Date(),
+      data.name || '',
+      data.company || '',
+      data.email || '',
+      data.location || '',
+      data.production_category || '',
+      data.certifications || '',
+      data.notes || ''
+    ]);
+    
+    return ContentService.createTextOutput(JSON.stringify({ 'result': 'success' })).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ 'result': 'error', 'error': err.toString() })).setMimeType(ContentService.MimeType.JSON);
+  }
 }
 ```
 
 ---
 
-## Step 4: Paste URLs into `script.js`
+## 🚨 CRITICAL Deployment Checklist (Must Check!)
 
-In `script.js`, paste your two URLs at the top of the file:
+When deploying your Apps Script project as a Web App:
+1. Click **Deploy** &rarr; **New deployment** (or **Manage deployments** &rarr; Edit pencil icon &rarr; **Version: New version**).
+2. Select type: **Web app**.
+3. **Execute as**: `Me (your_email@gmail.com)`
+4. **Who has access**: **`Anyone`**  <-- **MUST BE "Anyone"!** *(If set to "Only me" or "Anyone with Google account", Google blocks automated form posts).*
+5. Click **Deploy** and copy the **Web app URL**.
+
+---
+
+## Step 4: Paste Web App URLs into `script.js`
+
+In `script.js`, paste your URLs at the top of the file:
 
 ```javascript
 const BUYER_SHEET_WEBHOOK_URL = "YOUR_BUYER_WEB_APP_URL_HERE";
