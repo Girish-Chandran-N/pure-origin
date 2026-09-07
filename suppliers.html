@@ -119,7 +119,7 @@
             </div>
 
             <div class="field-group">
-              <label for="s-category">What do you produce? <span class="req">*</span></label>
+              <label for="s-category">What do you export? <span class="req">*</span></label>
               <select id="s-category" name="production_category" required>
                 <option value="" disabled selected>Select category...</option>
                 <option value="Sustainable & Eco-Friendly Packaging">Sustainable &amp; Eco-Friendly Packaging</option>
@@ -129,6 +129,10 @@
                 <option value="Home Décor & Artisan Goods">Home Décor &amp; Artisan Goods</option>
                 <option value="Other Workshop Goods">Other Workshop &amp; Artisan Goods</option>
               </select>
+              <div class="custom-category-container" id="s-custom-container" style="display:none; margin-top:10px;">
+                <label for="s-custom-input" style="font-size:0.82rem; font-weight:600; color:var(--oxide);">Specify Product / Export Capabilities <span class="req">*</span></label>
+                <input type="text" id="s-custom-input" name="custom_production_category" placeholder="e.g. Handmade Ceramic Tableware">
+              </div>
             </div>
 
             <div class="field-group">

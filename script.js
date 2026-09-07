@@ -325,8 +325,43 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* --------------------------------------------------------------------------
-     8. Separate Form Handlers for Buyer Sheet vs Supplier Sheet
+     8. Dynamic Custom Category Input Toggle & Merger
      -------------------------------------------------------------------------- */
+  function initCustomCategoryToggles() {
+    const categoryPairs = [
+      { selectId: 'b-category', containerId: 'b-custom-container', inputId: 'b-custom-input' },
+      { selectId: 's-category', containerId: 's-custom-container', inputId: 's-custom-input' }
+    ];
+
+    categoryPairs.forEach(({ selectId, containerId, inputId }) => {
+      const selects = document.querySelectorAll(`#${selectId}`);
+      selects.forEach(select => {
+        const parentForm = select.closest('form');
+        if (!parentForm) return;
+        const container = parentForm.querySelector(`#${containerId}`);
+        const input = parentForm.querySelector(`#${inputId}`);
+        if (!container || !input) return;
+
+        const updateVisibility = () => {
+          const val = select.value || '';
+          if (val.includes('Other')) {
+            container.style.display = 'block';
+            input.setAttribute('required', 'true');
+          } else {
+            container.style.display = 'none';
+            input.removeAttribute('required');
+            input.value = '';
+          }
+        };
+
+        select.addEventListener('change', updateVisibility);
+        updateVisibility();
+      });
+    });
+  }
+
+  initCustomCategoryToggles();
+
   function setupFormHandling(formId, statusId, targetSheetUrl) {
     const form = document.getElementById(formId);
     const statusEl = document.getElementById(statusId);
@@ -351,6 +386,18 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.innerHTML = `<span>Transmitting Enquiry...</span>`;
 
         const formData = new FormData(form);
+
+        // Merge custom product/export text into main category field if specified
+        const customCatInput = form.querySelector('input[name="custom_product_category"], input[name="custom_production_category"]');
+        if (customCatInput && customCatInput.value.trim() !== '') {
+          const customVal = customCatInput.value.trim();
+          if (formData.has('product_category')) {
+            formData.set('product_category', `Other: ${customVal}`);
+          }
+          if (formData.has('production_category')) {
+            formData.set('production_category', `Other: ${customVal}`);
+          }
+        }
 
         // 1. Primary Formspree Submission (Email notifications & CSV export)
         const response = await fetch(form.action, {
@@ -381,6 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
             We will review your enquiry and reply <strong>within 2 working days</strong>.
           `;
           form.reset();
+          initCustomCategoryToggles();
         } else {
           statusEl.className = 'form-feedback success';
           statusEl.innerHTML = `
@@ -388,6 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Our team will reply <strong>within 2 working days</strong>.
           `;
           form.reset();
+          initCustomCategoryToggles();
         }
       } catch (err) {
         statusEl.className = 'form-feedback success';
@@ -396,6 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
           We will respond <strong>within 2 working days</strong>.
         `;
         form.reset();
+        initCustomCategoryToggles();
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
